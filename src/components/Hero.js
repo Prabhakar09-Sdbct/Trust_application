@@ -54,11 +54,29 @@ export default function Hero({ mode }) {
     padding: '20px',
     maxWidth: '800px',
     margin: '20px auto',
-    backgroundColor: '#ffffff',
-    borderColor: '#000000',
+    backgroundColor: theme.palette.mode === 'dark' ? '#090E10' : '#ffffff',
+    borderColor: theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
     borderWidth: '2px',
     borderStyle: 'solid',
   }));
+
+  // Styled input component
+const StyledInput = styled('input')(({ theme }) => ({
+  width: '100%',
+  padding: '10px',
+  borderRadius: '5px',
+  border: `1px solid ${theme.palette.mode === 'dark' ? '#cccccc' : '#000000'}`,
+  backgroundColor: theme.palette.mode === 'dark' ? '#333333' : '#ffffff',
+  color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
+  outline: 'none',
+  '&::placeholder': {
+    color: theme.palette.mode === 'dark' ? '#bbbbbb' : '#777777',
+  },
+  '&:focus': {
+    borderColor: theme.palette.primary.main,
+  },
+}));
+
 
   const Logo = styled('div')({
     backgroundImage: 'url("/path-to-logo.jpg")', // Add path to logo image
@@ -102,13 +120,13 @@ export default function Hero({ mode }) {
                       <Typography variant="h5" style={{ color: '#FF5733', fontWeight: 'bold' }}>
                         Dummy Trust Name
                       </Typography>
-                      <Typography variant="body1" style={{ color: '#000' }}>
+                      <Typography variant="body1" color="text.secondary">
                         Mobile: +91 99999999 / 0000000000
                       </Typography>
-                      <Typography variant="body1" style={{ color: '#000' }}>
+                      <Typography variant="body1" color="text.secondary">
                         Email: dummy@gmail.com, Website: www.dummy.org / www.dummy.com
                       </Typography>
-                      <Typography variant="body1" style={{ color: '#000' }}>
+                      <Typography variant="body1" color="text.secondary">
                         PAN CARD NO.: 11111111
                       </Typography>
                     </Box>
@@ -119,28 +137,28 @@ export default function Hero({ mode }) {
                 </Grid>
 
                 <Box textAlign="center" my={2}>
-                  <Typography variant="h6" style={{ color: '#000', fontWeight: 'bold' }}>
+                <Typography variant="h5" color={mode === 'dark' ? '#text.secondary' : '#000'}>
                     RECEIPT
                   </Typography>
                 </Box>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <input type="number" id="number" name="number" placeholder="No." className="outlined-input" />
+                    <StyledInput type="number" id="number" name="number" placeholder="No." className="outlined-input" />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <input type="date" id="date" name="date" placeholder="Date" className="outlined-input" />
+                    <StyledInput type="date" id="date" name="date" placeholder="Date" className="outlined-input" />
                   </Grid>
                   <Grid item xs={12}>
-                    <input type="text" id="name" name="name" placeholder="Received with Thanks from Smt/Sri" className="outlined-input" />
+                    <StyledInput type="text" id="name" name="name" placeholder="Received with Thanks from Smt/Sri" className="outlined-input" />
                   </Grid>
                   <Grid item xs={12}>
-                    <input type="text" id="amount" name="amount" placeholder="the sum of Rupees" className="outlined-input" />
+                    <StyledInput type="text" id="amount" name="amount" placeholder="the sum of Rupees" className="outlined-input" />
                   </Grid>
                   <Grid item xs={12}>
-                    <input type="text" id="paymentDetails" name="paymentDetails"  placeholder="Only by Cash/Cheque/DD No." className="outlined-input" />
+                    <StyledInput type="text" id="paymentDetails" name="paymentDetails"  placeholder="Only by Cash/Cheque/DD No." className="outlined-input" />
                   </Grid>
                   <Grid item xs={12}>
-                    <input type="date" id="datedOn" name="datedOn" placeholder="Payment Date" className="outlined-input" />
+                    <StyledInput type="date" id="datedOn" name="datedOn" placeholder="Payment Date" className="outlined-input" />
                   </Grid>
                 </Grid>
               </StyledPaper>

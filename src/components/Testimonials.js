@@ -1,13 +1,14 @@
 import { Button, Grid, Paper } from '@mui/material';
 import Container from '@mui/material/Container';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { styled } from '@mui/system';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect } from 'react';
-import { writeFile, utils } from 'xlsx';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { utils, writeFile } from 'xlsx';
 import getLPTheme from '../getLPTheme';
 
 
-export default function Testimonials({mode}) {
+export default function Testimonials({ mode }) {
   const [receipts, setReceipts] = React.useState([]);
 
   const LPtheme = createTheme(getLPTheme(mode));
@@ -34,6 +35,16 @@ export default function Testimonials({mode}) {
     writeFile(wb, 'receipts.xlsx');
   };
 
+  const StyledPaper = styled(Paper)(({ theme }) => ({
+    height: 450,
+    padding: '1em',
+    paddingBottom: '8em',
+    width: '100%',
+    border: theme.palette.mode === 'dark' ? '' : '1px solid #ccc',
+    backgroundColor: theme.palette.mode === 'dark' ? '#090E10' : '#ffffff',
+
+  }));
+
   useEffect(() => {
     const fetchReceipts = async () => {
       try {
@@ -52,49 +63,68 @@ export default function Testimonials({mode}) {
 
   return (
     <ThemeProvider theme={LPtheme}>
-    <Container
-      id="testimonials"
-      sx={{
-        pt: { xs: 4, sm: 12 },
-        pb: { xs: 8, sm: 16 },
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: { xs: 3, sm: 6 },
-      }}
-    >
-      {/* <button >Export to Excel</button> */}
-      <Paper elevation={3} style={{ padding: '1em', height: 400, width: '100%', backgroundColor: '#fff', border: '1px solid #ccc' }}>
-        <Grid item xs={12} style={{ paddingBottom: '1em'}} >
-          <Button variant="contained" color="primary" onClick={() => exportToExcel(receipts)}>
-            Export
-          </Button>
-        </Grid>
-        <DataGrid
-          rows={receipts}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
+      <Container
+        id="testimonials"
+        sx={{
+          pt: { xs: 4, sm: 12 },
+          pb: { xs: 8, sm: 16 },
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: { xs: 3, sm: 6 },
+        }}
+      >
+        <StyledPaper elevation={3} className="container" id="receipt-form"
+          style={{
+            boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 10px 10px, rgba(60, 64, 67, 0.15) 0px 2px 10px 10px'
           }}
-          pageSizeOptions={[5, 10]}
-          sx={{
-            border: '1px solid rgba(224, 224, 224, 1)',
-            '& .MuiDataGrid-cell': {
-              borderBottom: '1px solid rgba(224, 224, 224, 1)',
-            },
-            '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: '#f5f5f5',
-              borderBottom: '1px solid rgba(224, 224, 224, 1)',
-            },
-          }}
+        >
+          <Grid item xs={12} style={{ paddingBottom: '1em' }} >
+            <Button variant="contained" color="primary" onClick={() => exportToExcel(receipts)}>
+              Export
+            </Button>
+          </Grid>
+          <DataGrid
+            rows={receipts}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            sx={{
+              border: `1px solid ${LPtheme.palette.grey[300]}`,
+              '& .MuiDataGrid-cell': {
+                borderBottom: `1px solid ${LPtheme.palette.grey[300]}`,
+                color: LPtheme.palette.text.primary,
+                backgroundColor: LPtheme.palette.background.default,
+                '&:hover': {
+                  backgroundColor: LPtheme.palette.action.selected,
+                },
+              },
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: LPtheme.palette.grey[100],
+                borderBottom: `1px solid ${LPtheme.palette.grey[300]}`,
+                color: LPtheme.palette.text.primary,
+              },
+              '& .MuiDataGrid-footerContainer': {
+                backgroundColor: LPtheme.palette.background.paper,
+                color: LPtheme.palette.text.primary,
+              },
+              '& .MuiTablePagination-root': {
+                color: LPtheme.palette.text.secondary,
+              },
+              '& .MuiDataGrid-row:hover': {
+                backgroundColor: LPtheme.palette.action.hover,
+              },
+            }}
 
-        />
+          />
 
-      </Paper>
-    </Container>
+        </StyledPaper>
+      </Container>
     </ThemeProvider>
   );
 }

@@ -1,12 +1,19 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import AppAppBar from './components/AppAppBar';
 import getLPTheme from './getLPTheme';
 
 function App() {
-  const [mode, setMode] = React.useState('light');
+  const storedMode = localStorage.getItem('mode');
+  const initialMode = storedMode ? JSON.parse(storedMode) : 'light';
+  const [mode, setMode] = useState(initialMode);
+
+  useEffect(() => {
+    localStorage.setItem('mode', JSON.stringify(mode));
+  }, [mode]);
+
   const LPtheme = createTheme(getLPTheme(mode));
 
   const toggleColorMode = () => {
