@@ -11,6 +11,12 @@ import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
+import myLogo from '../static/my-logo.png';
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import getLPTheme from '../getLPTheme';
+
+
 
 const logoStyle = {
   width: '140px',
@@ -27,8 +33,12 @@ function Copyright() {
   );
 }
 
-export default function Footer() {
+export default function Footer({mode}) {
+
+  const LPtheme = createTheme(getLPTheme(mode));
+
   return (
+    <ThemeProvider theme={LPtheme}>
     <Container
       sx={{
         display: 'flex',
@@ -58,9 +68,7 @@ export default function Footer() {
           <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
             <Box sx={{ ml: '-15px' }}>
               <img
-                src={
-                  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                }
+                src={myLogo}
                 style={logoStyle}
                 alt="logo of sitemark"
               />
@@ -216,5 +224,6 @@ export default function Footer() {
         </Stack>
       </Box>
     </Container>
+    </ThemeProvider>
   );
 }

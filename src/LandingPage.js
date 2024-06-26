@@ -8,11 +8,8 @@ import Divider from '@mui/material/Divider';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
-import Highlights from './components/Highlights';
-import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
 import getLPTheme from './getLPTheme';
 
@@ -64,17 +61,11 @@ export default function LandingPage({mode}) {
   return (
     <ThemeProvider theme={ LPtheme }>
       <CssBaseline />
-      <Hero />
+      <Hero mode={ mode }/>
       <Box sx={{ bgcolor: 'background.default' }}>
-        <Testimonials />
+        <Testimonials mode={ mode }/>
         <Divider />
-        <Highlights />
-        <Divider />
-        <Pricing />
-        <Divider />
-        <FAQ />
-        <Divider />
-        <Footer />
+        <Footer mode={ mode }/>
       </Box>
     </ThemeProvider>
   );
